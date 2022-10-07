@@ -1,0 +1,7 @@
+gremsy_ssd1306.c:91:13:ssd1306_write_comand	32	static
+gremsy_ssd1306.c:102:6:ssd1306_fill	16	static
+gremsy_ssd1306.c:111:13:I2C_DMAXferCplt_Fast	32	static
+gremsy_ssd1306.c:147:19:I2C_DMA_Fast	32	static
+gremsy_ssd1306.c:210:6:ssd1306_update_screen	40	static
+gremsy_ssd1306.c:287:6:ssd1306_init	8	static
+gremsy_ssd1306.c:365:6:ssd1306_draw_pixel	16	static

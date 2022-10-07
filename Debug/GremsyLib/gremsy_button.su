@@ -1,0 +1,4 @@
+gremsy_button.c:50:15:button_get_clicks	4	static
+gremsy_button.c:55:13:button_process	16	static
+gremsy_button.c:102:18:gremsy_button_init	8	static
+gremsy_button.c:128:18:gremsy_button	4	static

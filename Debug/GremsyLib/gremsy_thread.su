@@ -1,0 +1,14 @@
+gremsy_thread.c:46:17:gremsy_os_thread_get_tick	4	static
+gremsy_thread.c:61:17:gremsy_os_thread_get_tick_ms	4	static
+gremsy_thread.c:70:13:gremsy_os_thread_reset	24	static
+gremsy_thread.c:93:17:gremsy_os_thread_get	24	static
+gremsy_thread.c:118:17:gremsy_os_thread_get_ms	24	static
+gremsy_thread.c:130:17:gremsy_os_thread_getloop_ms	24	static
+gremsy_thread.c:144:13:gremsy_os_thread_sleep_ms	24	static
+gremsy_thread.c:160:13:gremsy_os_thread_loop_ms	24	static
+gremsy_thread.c:179:17:gremsy_os_thread_get_us	24	static
+gremsy_thread.c:191:17:gremsy_os_thread_getloop_us	24	static
+gremsy_thread.c:205:13:gremsy_os_thread_sleep_us	24	static
+gremsy_thread.c:221:13:gremsy_os_thread_loop_us	24	static
+gremsy_thread.c:250:18:gremsy_thread_init	8	static
+gremsy_thread.c:286:18:gremsy_thread	4	static
