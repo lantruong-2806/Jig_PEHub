@@ -199,8 +199,8 @@ static pin_check_t      uartTx,
 						canH,
 						gpsPps,
 						capture,
-						trig,
-						ffcUartTx,
+						trig;
+static pin_check_t		ffcUartTx,
 						ffcUartRx,
 						ffcCanH,
 						ffcCanL,
@@ -224,7 +224,7 @@ static void MX_I2C2_Init(void);
 static void MX_USART1_UART_Init(void);
 static void MX_ADC1_Init(void);
 /* USER CODE BEGIN PFP */
-static void PCF8575_write_pin(uint16_t GPIO_Pin, GPIO_PinState PinState);
+void PCF8575_write_pin(uint16_t GPIO_Pin, GPIO_PinState PinState);
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
@@ -260,171 +260,163 @@ static void pin_check_init(void)
 
      strcpy(ffcUartTx.pin_name, "FFC UartTx");
      strcpy(ffcUartTx.error_log, "ERR FFC_UartTx");
-     ffcUartTx.pin_type = PIN_TYPE_DIGITAL;
-     ffcUartTx.type_digital.gpio_in_port  = IN_COM_TX_GPIO_Port;
-     ffcUartTx.type_digital.gpio_in_pin   = IN_COM_TX_Pin;
-     ffcUartTx.type_digital.gpio_out_port = OUT_FFC_UART_TX_GPIO_Port;
-     ffcUartTx.type_digital.gpio_out_pin  = OUT_FFC_UART_TX_Pin;
+     ffcUartTx.pin_type = PIN_TYPE_EX;
+     ffcUartTx.type_ex_gpio.GPIO_OutExPinNum   = IO_EX_UART_TX;
+     ffcUartTx.type_ex_gpio.gpio_in_port 		= IN_FFC_UART_TX_GPIO_Port;
+     ffcUartTx.type_ex_gpio.gpio_in_pin		= IN_FFC_UART_TX_Pin;
 
      strcpy(ffcUartRx.pin_name, "FFC UartRx");
      strcpy(ffcUartRx.error_log, "ERR FFC_UartRx");
-     ffcUartRx.pin_type = PIN_TYPE_DIGITAL;
-     ffcUartRx.type_digital.gpio_in_port  = IN_COM_RX_GPIO_Port;
-     ffcUartRx.type_digital.gpio_in_pin   = IN_COM_RX_Pin;
-     ffcUartRx.type_digital.gpio_out_port = OUT_FFC_UART_RX_GPIO_Port;
-     ffcUartRx.type_digital.gpio_out_pin  = OUT_FFC_UART_RX_Pin;
-//
+     ffcUartRx.pin_type = PIN_TYPE_EX;
+     ffcUartRx.type_ex_gpio.GPIO_OutExPinNum   = IO_EX_UART_RX;
+     ffcUartRx.type_ex_gpio.gpio_in_port 		= IN_FFC_UART_RX_GPIO_Port;
+     ffcUartRx.type_ex_gpio.gpio_in_pin		= IN_FFC_UART_RX_Pin;
+
      strcpy(ffcCanH.pin_name, "FFC CanH");
      strcpy(ffcCanH.error_log, "ERR FFC_CanH");
-     ffcCanH.pin_type = PIN_TYPE_DIGITAL;
-     ffcCanH.type_digital.gpio_in_port  = IN_CANH_GPIO_Port;
-     ffcCanH.type_digital.gpio_in_pin   = IN_CANH_Pin;
-     ffcCanH.type_digital.gpio_out_port = OUT_FFC_CANH_GPIO_Port;
-     ffcCanH.type_digital.gpio_out_pin  = OUT_FFC_CANH_Pin;
+     ffcCanH.pin_type = PIN_TYPE_EX;
+     ffcCanH.type_ex_gpio.GPIO_OutExPinNum   = IO_EX_CANH;
+     ffcCanH.type_ex_gpio.gpio_in_port 		= IN_FFC_CANH_GPIO_Port;
+     ffcCanH.type_ex_gpio.gpio_in_pin		= IN_FFC_CANH_Pin;
 
      strcpy(ffcCanL.pin_name, "FFC ffcCanL");
      strcpy(ffcCanL.error_log, "ERR FFC_CanL");
-     ffcCanL.pin_type = PIN_TYPE_DIGITAL;
-     ffcCanL.type_digital.gpio_in_port  = IN_CANL_GPIO_Port;
-     ffcCanL.type_digital.gpio_in_pin   = IN_CANL_Pin;
-     ffcCanL.type_digital.gpio_out_port = OUT_FFC_CANL_GPIO_Port;
-     ffcCanL.type_digital.gpio_out_pin  = OUT_FFC_CANL_Pin;
+     ffcCanL.pin_type = PIN_TYPE_EX;
+     ffcCanL.type_ex_gpio.GPIO_OutExPinNum   = IO_EX_CANL;
+     ffcCanL.type_ex_gpio.gpio_in_port 		= IN_FFC_CANL_GPIO_Port;
+     ffcCanL.type_ex_gpio.gpio_in_pin		= IN_FFC_CANL_Pin;
 
      strcpy(ffcEthTxp.pin_name, "FFC ffcEthTxp");
      strcpy(ffcEthTxp.error_log, "ERR FFC_EthTxp");
-     ffcEthTxp.pin_type = PIN_TYPE_DIGITAL;
-     ffcEthTxp.type_digital.gpio_in_port  = IN_ETH_TXP_GPIO_Port;
-     ffcEthTxp.type_digital.gpio_in_pin   = IN_ETH_TXP_Pin;
-     ffcEthTxp.type_digital.gpio_out_port = OUT_FFC_ETH_TXP_GPIO_Port;
-     ffcEthTxp.type_digital.gpio_out_pin  = OUT_FFC_ETH_TXP_Pin;
+     ffcEthTxp.pin_type = PIN_TYPE_EX;
+     ffcEthTxp.type_ex_gpio.GPIO_OutExPinNum   = IO_EX_ETHTXP;
+     ffcEthTxp.type_ex_gpio.gpio_in_port 		= IN_FFC_ETH_TXP_GPIO_Port;
+     ffcEthTxp.type_ex_gpio.gpio_in_pin		= IN_FFC_ETH_TXP_Pin;
+
 
      strcpy(ffcEthTxn.pin_name, "FFC ffcEthTxn");
      strcpy(ffcEthTxn.error_log, "ERR FFC_EthTxn");
-     ffcEthTxn.pin_type = PIN_TYPE_DIGITAL;
-     ffcEthTxn.type_digital.gpio_in_port  = IN_ETH_TXN_GPIO_Port;
-     ffcEthTxn.type_digital.gpio_in_pin   = IN_ETH_TXN_Pin;
-     ffcEthTxn.type_digital.gpio_out_port = OUT_FFC_ETH_TXN_GPIO_Port;
-     ffcEthTxn.type_digital.gpio_out_pin  = OUT_FFC_ETH_TXN_Pin;
+     ffcEthTxn.pin_type = PIN_TYPE_EX;
+     ffcEthTxn.type_ex_gpio.GPIO_OutExPinNum    = IO_EX_ETHTXN;
+     ffcEthTxn.type_ex_gpio.gpio_in_port 		= IN_FFC_ETH_TXN_GPIO_Port;
+     ffcEthTxn.type_ex_gpio.gpio_in_pin			= IN_FFC_ETH_TXN_Pin;
+
 
      strcpy(ffcEthRxp.pin_name, "FFC EthRxp");
      strcpy(ffcEthRxp.error_log, "ERR FFC_EthRxp");
-     ffcEthRxp.pin_type = PIN_TYPE_DIGITAL;
-     ffcEthRxp.type_digital.gpio_in_port  = IN_ETH_RXP_GPIO_Port;
-     ffcEthRxp.type_digital.gpio_in_pin   = IN_ETH_RXP_Pin;
-     ffcEthRxp.type_digital.gpio_out_port = OUT_FFC_ETH_RXP_GPIO_Port;
-     ffcEthRxp.type_digital.gpio_out_pin  = OUT_FFC_ETH_RXP_Pin;
+     ffcEthRxp.pin_type = PIN_TYPE_EX;
+     ffcEthRxp.type_ex_gpio.GPIO_OutExPinNum    = IO_EX_ETHRXP;
+     ffcEthRxp.type_ex_gpio.gpio_in_port 		= IN_FFC_ETH_RXP_GPIO_Port;
+     ffcEthRxp.type_ex_gpio.gpio_in_pin			= IN_FFC_ETH_RXP_Pin;
 
      strcpy(ffcEthRxn.pin_name, "FFC ethRxn");
      strcpy(ffcEthRxn.error_log, "ERR FFC_ethRxn");
-     ffcEthRxn.pin_type = PIN_TYPE_DIGITAL;
-     ffcEthRxn.type_digital.gpio_in_port  = IN_ETH_RXN_GPIO_Port;
-     ffcEthRxn.type_digital.gpio_in_pin   = IN_ETH_RXN_Pin;
-     ffcEthRxn.type_digital.gpio_out_port = OUT_FFC_ETH_RXN_GPIO_Port;
-     ffcEthRxn.type_digital.gpio_out_pin  = OUT_FFC_ETH_RXN_Pin;
+     ffcEthRxn.pin_type = PIN_TYPE_EX;
+     ffcEthRxn.type_ex_gpio.GPIO_OutExPinNum    = IO_EX_ETHRXN;
+     ffcEthRxn.type_ex_gpio.gpio_in_port 		= IN_FFC_ETH_RXN_GPIO_Port;
+     ffcEthRxn.type_ex_gpio.gpio_in_pin			= IN_FFC_ETH_RXN_Pin;
 
      strcpy(ffcusbDp.pin_name, "FFC usbDp");
      strcpy(ffcusbDp.error_log, "ERR FFC_usbDp");
-     ffcusbDp.pin_type = PIN_TYPE_DIGITAL;
-     ffcusbDp.type_digital.gpio_in_port  = IN_USB_DP_GPIO_Port;
-     ffcusbDp.type_digital.gpio_in_pin   = IN_USB_DP_Pin;
-     ffcusbDp.type_digital.gpio_out_port = OUT_FFC_USB_DP_GPIO_Port;
-     ffcusbDp.type_digital.gpio_out_pin  = OUT_FFC_USB_DP_Pin;
+     ffcusbDp.pin_type = PIN_TYPE_EX;
+     ffcusbDp.type_ex_gpio.GPIO_OutExPinNum    = IO_EX_USB_DP;
+     ffcusbDp.type_ex_gpio.gpio_in_port 		= IN_FFC_USB_DP_GPIO_Port;
+     ffcusbDp.type_ex_gpio.gpio_in_pin			= IN_FFC_USB_DP_Pin;
 
      strcpy(ffcusbDn.pin_name, "FFC usbDn");
      strcpy(ffcusbDn.error_log, "ERR FFC_usbDn");
-     ffcusbDn.pin_type = PIN_TYPE_DIGITAL;
-     ffcusbDn.type_digital.gpio_in_port  = IN_USB_DN_GPIO_Port;
-     ffcusbDn.type_digital.gpio_in_pin   = IN_USB_DN_Pin;
-     ffcusbDn.type_digital.gpio_out_port = OUT_FFC_USB_DN_GPIO_Port;
-     ffcusbDn.type_digital.gpio_out_pin  = OUT_FFC_USB_DN_Pin;
+     ffcusbDn.pin_type = PIN_TYPE_EX;
+     ffcusbDn.type_ex_gpio.GPIO_OutExPinNum    = IO_EX_USB_DN;
+     ffcusbDn.type_ex_gpio.gpio_in_port 		= IN_FFC_USB_DN_GPIO_Port;
+     ffcusbDn.type_ex_gpio.gpio_in_pin			= IN_FFC_USB_DN_Pin;
 
     //##########CONNECTOR PIN##########
-     strcpy(uartTx.pin_name, "FFC PEHUB uartTx");
+     strcpy(uartTx.pin_name, "PEHUB uartTx");
      strcpy(uartTx.error_log, "ERR PEHUB uartTx");
      uartTx.pin_type = PIN_TYPE_EX;
      uartTx.type_ex_gpio.GPIO_OutExPinNum   = IO_EX_UART_TX;
      uartTx.type_ex_gpio.gpio_in_port 		= IN_COM_TX_GPIO_Port;
      uartTx.type_ex_gpio.gpio_in_pin		= IN_COM_TX_Pin;
 
-     strcpy(uartRx.pin_name, "FFC PEHUB uartRx");
+     strcpy(uartRx.pin_name, "PEHUB uartRx");
      strcpy(uartRx.error_log, "ERR PEHUB uartRx");
      uartRx.pin_type = PIN_TYPE_EX;
      uartRx.type_ex_gpio.GPIO_OutExPinNum   = IO_EX_UART_RX;
      uartRx.type_ex_gpio.gpio_in_port 		= IN_COM_RX_GPIO_Port; //IN_COM_RX_GPIO_Port
      uartRx.type_ex_gpio.gpio_in_pin		= IN_COM_RX_Pin;
 
-     strcpy(ethRxn.pin_name, "FFC PEHUB ethRxn");
+     strcpy(ethRxn.pin_name, "PEHUB ethRxn");
      strcpy(ethRxn.error_log, "ERR PEHUB ethRxn");
      ethRxn.pin_type = PIN_TYPE_EX;
      ethRxn.type_ex_gpio.GPIO_OutExPinNum   = IO_EX_ETHRXN;
      ethRxn.type_ex_gpio.gpio_in_port 		= IN_ETH_RXN_GPIO_Port;
      ethRxn.type_ex_gpio.gpio_in_pin		= IN_ETH_RXN_Pin;
 
-     strcpy(ethRxp.pin_name, "FFC PEHUB ethRxp");
+     strcpy(ethRxp.pin_name, "PEHUB ethRxp");
      strcpy(ethRxp.error_log, "ERR PEHUB ethRxp");
      ethRxp.pin_type = PIN_TYPE_EX;
      ethRxp.type_ex_gpio.GPIO_OutExPinNum   = IO_EX_ETHRXP;
      ethRxp.type_ex_gpio.gpio_in_port 		= IN_ETH_RXP_GPIO_Port;
      ethRxp.type_ex_gpio.gpio_in_pin		= IN_ETH_RXP_Pin;
 
-     strcpy(ethTxn.pin_name, "FFC PEHUB ethTxn");
+     strcpy(ethTxn.pin_name, "PEHUB ethTxn");
      strcpy(ethTxn.error_log, "ERR PEHUB ethTxn");
      ethTxn.pin_type = PIN_TYPE_EX;
      ethTxn.type_ex_gpio.GPIO_OutExPinNum   = IO_EX_ETHTXN;
      ethTxn.type_ex_gpio.gpio_in_port 		= IN_ETH_TXN_GPIO_Port;
      ethTxn.type_ex_gpio.gpio_in_pin		= IN_ETH_TXN_Pin;
 
-     strcpy(ethTxp.pin_name, "FFC PEHUB ethTxp");
+     strcpy(ethTxp.pin_name, "PEHUB ethTxp");
      strcpy(ethTxp.error_log, "ERR PEHUB ethTxp");
      ethTxp.pin_type = PIN_TYPE_EX;
      ethTxp.type_ex_gpio.GPIO_OutExPinNum   = IO_EX_ETHTXP;
      ethTxp.type_ex_gpio.gpio_in_port 		= IN_ETH_TXP_GPIO_Port;
      ethTxp.type_ex_gpio.gpio_in_pin		= IN_ETH_TXP_Pin;
 
-     strcpy(usbDp.pin_name, "FFC PEHUB usbDp");
+     strcpy(usbDp.pin_name, "PEHUB usbDp");
      strcpy(usbDp.error_log, "ERR PEHUB usbDp");
      usbDp.pin_type = PIN_TYPE_EX;
      usbDp.type_ex_gpio.GPIO_OutExPinNum    = IO_EX_USB_DP;
      usbDp.type_ex_gpio.gpio_in_port 		= IN_USB_DP_GPIO_Port;
      usbDp.type_ex_gpio.gpio_in_pin			= IN_USB_DP_Pin;
 
-     strcpy(usbDn.pin_name, "FFC PEHUB usbDn");
+     strcpy(usbDn.pin_name, "PEHUB usbDn");
      strcpy(usbDn.error_log, "ERR PEHUB usbDn");
      usbDn.pin_type = PIN_TYPE_EX;
      usbDn.type_ex_gpio.GPIO_OutExPinNum    = IO_EX_USB_DN;
      usbDn.type_ex_gpio.gpio_in_port 		= IN_USB_DN_GPIO_Port;
      usbDn.type_ex_gpio.gpio_in_pin		    = IN_USB_DN_Pin;
 
-     strcpy(canL.pin_name, "FFC PEHUB canL");
+     strcpy(canL.pin_name, "PEHUB canL");
      strcpy(canL.error_log, "ERR PEHUB canL");
      canL.pin_type = PIN_TYPE_EX;
      canL.type_ex_gpio.GPIO_OutExPinNum   	= IO_EX_CANL;
      canL.type_ex_gpio.gpio_in_port 		= IN_CANL_GPIO_Port;
      canL.type_ex_gpio.gpio_in_pin			= IN_CANL_Pin;
 
-     strcpy(canH.pin_name, "FFC PEHUB canH");
+     strcpy(canH.pin_name, "PEHUB canH");
      strcpy(canH.error_log, "ERR PEHUB canH");
      canH.pin_type = PIN_TYPE_EX;
      canH.type_ex_gpio.GPIO_OutExPinNum     = IO_EX_CANH;
      canH.type_ex_gpio.gpio_in_port 		= IN_CANH_GPIO_Port;
      canH.type_ex_gpio.gpio_in_pin		    = IN_CANH_Pin;
 
-     strcpy(gpsPps.pin_name, "FFC PEHUB gpsPps");
+     strcpy(gpsPps.pin_name, "PEHUB gpsPps");
      strcpy(gpsPps.error_log, "ERR PEHUB gpsPps");
      gpsPps.pin_type = PIN_TYPE_EX;
      gpsPps.type_ex_gpio.GPIO_OutExPinNum   = IO_EX_GPS_PPS;
      gpsPps.type_ex_gpio.gpio_in_port 		= IN_GPS_PPS_GPIO_Port;
      gpsPps.type_ex_gpio.gpio_in_pin		= IN_GPS_PPS_Pin;
 
-     strcpy(capture.pin_name, "FFC PEHUB capture");
+     strcpy(capture.pin_name, "PEHUB capture");
      strcpy(capture.error_log, "ERR PEHUB capture");
      capture.pin_type = PIN_TYPE_EX;
      capture.type_ex_gpio.GPIO_OutExPinNum   = IO_EX_CAPTURE;
      capture.type_ex_gpio.gpio_in_port 		 = IN_CAPTURE_GPIO_Port;
      capture.type_ex_gpio.gpio_in_pin		 = IN_CAPTURE_Pin;
 
-     strcpy(trig.pin_name, "FFC PEHUB trig/spek");
-     strcpy(trig.error_log, "ERR PEHUB trig/spek");
+     strcpy(trig.pin_name, "PEHUB spek");
+     strcpy(trig.error_log, "ERR PEHUB spek");
      trig.pin_type = PIN_TYPE_EX;
      trig.type_ex_gpio.GPIO_OutExPinNum      = IO_EX_TRIG;
      trig.type_ex_gpio.gpio_in_port 		 = IN_TRIG_GPIO_Port;
@@ -871,39 +863,42 @@ void test_process(void)
 			   //kiem tra pin ket noi qua ex io
 			   if(pin_check_data.array[pin_check_data.count].pin_type == PIN_TYPE_EX)
 			   {
-				   //Set muc 1 cho Output
-
-				   PCF8575_write_pin(pin_check_data.array[pin_check_data.count].type_ex_gpio.GPIO_OutExPinNum, GPIO_PIN_SET);
-				   thread->sleep_us(5);
-				   //Khai bao keo xuong cho Input
-				   gpio_fast_input_set_pulldown(pin_check_data.array[pin_check_data.count].type_digital.gpio_in_port,
-												pin_check_data.array[pin_check_data.count].type_digital.gpio_in_pin);
-				   //Delay de doi ham thuc hien xong
-				   thread->sleep_us(5);
-
-				   //Doc du lieu tu chan
-				   if(gpio_fast_input_read(pin_check_data.array[pin_check_data.count].type_digital.gpio_in_port,
-										   pin_check_data.array[pin_check_data.count].type_digital.gpio_in_pin) == 0)
-				   {
-					pin_check_data.state = PIN_CHECK_STATE_ERROR;
-				   }
 
 				   //Set muc 0 cho Output
 				   PCF8575_write_pin(pin_check_data.array[pin_check_data.count].type_ex_gpio.GPIO_OutExPinNum, GPIO_PIN_RESET);
 				   thread->sleep_us(5);
 				   //Khai bao PULLUP cho Input
-				   gpio_fast_input_set_pullup(pin_check_data.array[pin_check_data.count].type_digital.gpio_in_port,
-											  pin_check_data.array[pin_check_data.count].type_digital.gpio_in_pin);
+				   gpio_fast_input_set_pullup(pin_check_data.array[pin_check_data.count].type_ex_gpio.gpio_in_port,
+											  pin_check_data.array[pin_check_data.count].type_ex_gpio.gpio_in_pin);
 
 				   //Delay de doi ham thuc hien xong
 				   thread->sleep_us(5);
 
 				   //Doc du lieu tu chan
-				   if(gpio_fast_input_read(pin_check_data.array[pin_check_data.count].type_digital.gpio_in_port,
-										   pin_check_data.array[pin_check_data.count].type_digital.gpio_in_pin) == 1)
+				   if(gpio_fast_input_read(pin_check_data.array[pin_check_data.count].type_ex_gpio.gpio_in_port,
+										   pin_check_data.array[pin_check_data.count].type_ex_gpio.gpio_in_pin) == 1)
 				   {
 					   pin_check_data.state = PIN_CHECK_STATE_ERROR;
 				   }
+
+				   //Set muc 1 cho Output
+
+				   PCF8575_write_pin(pin_check_data.array[pin_check_data.count].type_ex_gpio.GPIO_OutExPinNum, GPIO_PIN_SET);
+				   thread->sleep_us(5);
+				   //Khai bao keo xuong cho Input
+				   gpio_fast_input_set_pulldown(pin_check_data.array[pin_check_data.count].type_ex_gpio.gpio_in_port,
+												pin_check_data.array[pin_check_data.count].type_ex_gpio.gpio_in_pin);
+				   //Delay de doi ham thuc hien xong
+				   thread->sleep_us(1000);
+
+				   //Doc du lieu tu chan
+				   if(gpio_fast_input_read(pin_check_data.array[pin_check_data.count].type_ex_gpio.gpio_in_port,
+										   pin_check_data.array[pin_check_data.count].type_ex_gpio.gpio_in_pin) == 0)
+//				    if(gpio_fast_input_read(IN_COM_TX_GPIO_Port,IN_COM_TX_Pin) == 0)
+				   {
+					pin_check_data.state = PIN_CHECK_STATE_ERROR;
+				   }
+
 			   }
 
 			   //Chuyen tab neu loi
@@ -970,7 +965,7 @@ static void PCF8575_init(void)
     @param[in]
     @return
 */
-static void PCF8575_write_pin(uint16_t GPIO_Pin, GPIO_PinState PinState)
+void PCF8575_write_pin(uint16_t GPIO_Pin, GPIO_PinState PinState)
 {
 	uint8_t data[2] = {0};
 	if(PinState == GPIO_PIN_SET)
@@ -1074,8 +1069,8 @@ int main(void)
 
   //check pin ffc cable
 
-    pin_check_add(ffcUartTx);
-    pin_check_add(ffcUartRx);
+  pin_check_add(ffcUartTx);
+  pin_check_add(ffcUartRx);
   pin_check_add(ffcCanH);
   pin_check_add(ffcCanL);
   pin_check_add(ffcEthTxp);
@@ -1085,23 +1080,22 @@ int main(void)
   pin_check_add(ffcusbDp);
   pin_check_add(ffcusbDn);
 
-  //check pin connector'
-	pin_check_add(uartTx);
-	pin_check_add(uartRx);
-//  pin_check_add(ethRxn);
-//  pin_check_add(ethRxp);
-//  pin_check_add(ethTxn);
-//  pin_check_add(ethTxp);
-//  pin_check_add(usbDp);
-//  pin_check_add(usbDn);
-//  pin_check_add(canL);
-//  pin_check_add(canH);
-//  pin_check_add(gpsPps);
-//  pin_check_add(capture);
-//  pin_check_add(trig);
+  //check pin connector linear
+  pin_check_add(uartTx);
+  pin_check_add(uartRx);
+  pin_check_add(ethRxn);
+  pin_check_add(ethRxp);
+  pin_check_add(ethTxn);
+  pin_check_add(ethTxp);
+  pin_check_add(usbDp);
+  pin_check_add(usbDn);
+  pin_check_add(canL);
+  pin_check_add(canH);
+  pin_check_add(gpsPps);
+  pin_check_add(capture);
+  pin_check_add(trig);
 
   //check pin power
-//
   pin_check_add(com5v);
   pin_check_add(comGnd);
   pin_check_add(can5v);
@@ -1133,9 +1127,8 @@ int main(void)
   /* Init uGUI */
   UG_Init(&gui,(void(*)(UG_S16,UG_S16,UG_COLOR))ssd1306_draw_pixel,130,64);
   uint32_t time_process_screen;
-
   /// Trang thai khoi tao
-
+  uint8_t read = 0;
   while (1)
   {
     /* USER CODE END WHILE */
@@ -1158,6 +1151,7 @@ int main(void)
 //    iic_device_scan(&hi2c2);
     test_process();
 
+
     //Cap nhat man hinh
     if(thread->loop_ms(&time_process_screen, 10))
     {
@@ -1165,14 +1159,50 @@ int main(void)
       {
           screen_process();
       }
-#ifdef GPIO_TEST
-    PCF8575_write_pin(IO_EX_UART_TX, GPIO_PIN_SET);
-    uint8_t read = HAL_GPIO_ReadPin(IN_COM_TX_GPIO_Port,IN_COM_TX_Pin);
-    thread->sleep_ms(200);
 
-    PCF8575_write_pin(IO_EX_UART_TX, GPIO_PIN_RESET);
-    read = HAL_GPIO_ReadPin(IN_COM_TX_GPIO_Port,IN_COM_TX_Pin);
-    thread->sleep_ms(200);
+#ifdef GPIO_TEST
+	   //Set muc 0 cho Output
+	   PCF8575_write_pin(IO_EX_UART_TX, GPIO_PIN_RESET);
+	   thread->sleep_us(5);
+	   //Khai bao PULLUP cho Input
+	   gpio_fast_input_set_pullup(IN_COM_TX_GPIO_Port,IN_COM_TX_Pin);
+
+	   //Delay de doi ham thuc hien xong
+	   thread->sleep_us(5);
+
+	   //Doc du lieu tu chan
+	   if(gpio_fast_input_read(IN_COM_TX_GPIO_Port,IN_COM_TX_Pin) == 1)
+	   {
+		   pin_check_data.state = PIN_CHECK_STATE_ERROR;
+	   }
+
+	   //Set muc 1 cho Output
+
+	   PCF8575_write_pin(IO_EX_UART_TX, GPIO_PIN_SET);
+	   thread->sleep_us(5);
+	   //Khai bao keo xuong cho Input
+	   gpio_fast_input_set_pulldown(IN_COM_TX_GPIO_Port,IN_COM_TX_Pin);
+	   //Delay de doi ham thuc hien xong
+	   thread->sleep_us(5);
+
+	   //Doc du lieu tu chan
+	   if(gpio_fast_input_read(IN_COM_TX_GPIO_Port,IN_COM_TX_Pin) == 0)
+	   {
+		pin_check_data.state = PIN_CHECK_STATE_ERROR;
+	   }
+
+//    PCF8575_write_pin(IO_EX_UART_TX, GPIO_PIN_SET);
+// /*= HAL_GPIO_ReadPin(IN_COM_TX_GPIO_Port,IN_COM_TX_Pin);*/
+//    gpio_fast_input_set_pulldown(IN_COM_TX_GPIO_Port,IN_COM_TX_Pin);
+//    thread->sleep_us(5);
+//    read =  gpio_fast_input_read(IN_COM_TX_GPIO_Port, IN_COM_TX_Pin);
+//
+//    PCF8575_write_pin(IO_EX_UART_TX, GPIO_PIN_RESET);
+//    gpio_fast_input_set_pullup(IN_COM_TX_GPIO_Port,IN_COM_TX_Pin);
+//    thread->sleep_us(5);
+//    read =  gpio_fast_input_read(IN_COM_TX_GPIO_Port, IN_COM_TX_Pin);
+////    read = HAL_GPIO_ReadPin(IN_COM_TX_GPIO_Port,IN_COM_TX_Pin);
+
 #endif
     }
   }
@@ -1426,7 +1456,7 @@ static void MX_I2C2_Init(void)
 
   /* USER CODE END I2C2_Init 1 */
   hi2c2.Instance = I2C2;
-  hi2c2.Init.ClockSpeed = 400000;
+  hi2c2.Init.ClockSpeed = 100000;
   hi2c2.Init.DutyCycle = I2C_DUTYCYCLE_2;
   hi2c2.Init.OwnAddress1 = 0;
   hi2c2.Init.AddressingMode = I2C_ADDRESSINGMODE_7BIT;
@@ -1558,22 +1588,14 @@ static void MX_GPIO_Init(void)
   __HAL_RCC_GPIOB_CLK_ENABLE();
   __HAL_RCC_GPIOD_CLK_ENABLE();
 
-  /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(GPIOB, OUT_FFC_ETH_TXN_Pin|OUT_FFC_ETH_RXP_Pin|OUT_FFC_ETH_RXN_Pin|OUT_FFC_USB_DN_Pin
-                          |OUT_FFC_UART_TX_Pin|OUT_FFC_UART_RX_Pin|OUT_FFC_CANH_Pin|OUT_FFC_CANL_Pin
-                          |OUT_FFC_ETH_TXP_Pin, GPIO_PIN_RESET);
-
-  /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(OUT_FFC_USB_DP_GPIO_Port, OUT_FFC_USB_DP_Pin, GPIO_PIN_RESET);
-
   /*Configure GPIO pins : IN_CAPTURE_Pin IN_TRIG_Pin IN_COM_RX_Pin IN_COM_TX_Pin
-                           IN_USB_DP_Pin IN_USB_DN_Pin IN_CANL_Pin IN_CANH_Pin
-                           IN_GPS_PPS_Pin */
+                           IN_PGND3_Pin IN_PGND2_Pin IN_USB_DP_Pin IN_USB_DN_Pin
+                           IN_CANL_Pin IN_CANH_Pin IN_GPS_PPS_Pin */
   GPIO_InitStruct.Pin = IN_CAPTURE_Pin|IN_TRIG_Pin|IN_COM_RX_Pin|IN_COM_TX_Pin
-                          |IN_USB_DP_Pin|IN_USB_DN_Pin|IN_CANL_Pin|IN_CANH_Pin
-                          |IN_GPS_PPS_Pin;
+                          |IN_PGND3_Pin|IN_PGND2_Pin|IN_USB_DP_Pin|IN_USB_DN_Pin
+                          |IN_CANL_Pin|IN_CANH_Pin|IN_GPS_PPS_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
-  GPIO_InitStruct.Pull = GPIO_NOPULL;
+  GPIO_InitStruct.Pull = GPIO_PULLDOWN;
   HAL_GPIO_Init(GPIOC, &GPIO_InitStruct);
 
   /*Configure GPIO pin : BTN_Pin */
@@ -1582,35 +1604,27 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Pull = GPIO_PULLUP;
   HAL_GPIO_Init(BTN_GPIO_Port, &GPIO_InitStruct);
 
-  /*Configure GPIO pins : OUT_FFC_ETH_TXN_Pin OUT_FFC_ETH_RXP_Pin OUT_FFC_ETH_RXN_Pin OUT_FFC_USB_DN_Pin
-                           OUT_FFC_UART_TX_Pin OUT_FFC_UART_RX_Pin OUT_FFC_CANH_Pin OUT_FFC_CANL_Pin
-                           OUT_FFC_ETH_TXP_Pin */
-  GPIO_InitStruct.Pin = OUT_FFC_ETH_TXN_Pin|OUT_FFC_ETH_RXP_Pin|OUT_FFC_ETH_RXN_Pin|OUT_FFC_USB_DN_Pin
-                          |OUT_FFC_UART_TX_Pin|OUT_FFC_UART_RX_Pin|OUT_FFC_CANH_Pin|OUT_FFC_CANL_Pin
-                          |OUT_FFC_ETH_TXP_Pin;
-  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
-  GPIO_InitStruct.Pull = GPIO_NOPULL;
-  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
-  HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
-
-  /*Configure GPIO pins : IN_PGND3_Pin IN_PGND2_Pin */
-  GPIO_InitStruct.Pin = IN_PGND3_Pin|IN_PGND2_Pin;
+  /*Configure GPIO pins : IN_FFC_ETH_TXN_Pin IN_FFC_ETH_RXP_Pin IN_FFC_ETH_RXN_Pin IN_FFC_USB_DN_Pin
+                           IN_FFC_UART_TX_Pin IN_FFC_UART_RX_Pin IN_FFC_CANH_Pin IN_FFC_CANL_Pin
+                           IN_FFC_ETH_TXP_Pin */
+  GPIO_InitStruct.Pin = IN_FFC_ETH_TXN_Pin|IN_FFC_ETH_RXP_Pin|IN_FFC_ETH_RXN_Pin|IN_FFC_USB_DN_Pin
+                          |IN_FFC_UART_TX_Pin|IN_FFC_UART_RX_Pin|IN_FFC_CANH_Pin|IN_FFC_CANL_Pin
+                          |IN_FFC_ETH_TXP_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
   GPIO_InitStruct.Pull = GPIO_PULLDOWN;
-  HAL_GPIO_Init(GPIOC, &GPIO_InitStruct);
+  HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
 
   /*Configure GPIO pins : IN_ETH_RXN_Pin IN_ETH_RXP_Pin IN_ETH_TXN_Pin IN_ETH_TXP_Pin */
   GPIO_InitStruct.Pin = IN_ETH_RXN_Pin|IN_ETH_RXP_Pin|IN_ETH_TXN_Pin|IN_ETH_TXP_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
-  GPIO_InitStruct.Pull = GPIO_NOPULL;
+  GPIO_InitStruct.Pull = GPIO_PULLDOWN;
   HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
 
-  /*Configure GPIO pin : OUT_FFC_USB_DP_Pin */
-  GPIO_InitStruct.Pin = OUT_FFC_USB_DP_Pin;
-  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
-  GPIO_InitStruct.Pull = GPIO_NOPULL;
-  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
-  HAL_GPIO_Init(OUT_FFC_USB_DP_GPIO_Port, &GPIO_InitStruct);
+  /*Configure GPIO pin : IN_FFC_USB_DP_Pin */
+  GPIO_InitStruct.Pin = IN_FFC_USB_DP_Pin;
+  GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
+  GPIO_InitStruct.Pull = GPIO_PULLDOWN;
+  HAL_GPIO_Init(IN_FFC_USB_DP_GPIO_Port, &GPIO_InitStruct);
 
 }
 

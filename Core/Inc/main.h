@@ -68,14 +68,14 @@ void Error_Handler(void);
 #define IN_COM_RX_GPIO_Port GPIOC
 #define IN_COM_TX_Pin GPIO_PIN_1
 #define IN_COM_TX_GPIO_Port GPIOC
-#define OUT_FFC_ETH_TXN_Pin GPIO_PIN_12
-#define OUT_FFC_ETH_TXN_GPIO_Port GPIOB
-#define OUT_FFC_ETH_RXP_Pin GPIO_PIN_13
-#define OUT_FFC_ETH_RXP_GPIO_Port GPIOB
-#define OUT_FFC_ETH_RXN_Pin GPIO_PIN_14
-#define OUT_FFC_ETH_RXN_GPIO_Port GPIOB
-#define OUT_FFC_USB_DN_Pin GPIO_PIN_15
-#define OUT_FFC_USB_DN_GPIO_Port GPIOB
+#define IN_FFC_ETH_TXN_Pin GPIO_PIN_12
+#define IN_FFC_ETH_TXN_GPIO_Port GPIOB
+#define IN_FFC_ETH_RXP_Pin GPIO_PIN_13
+#define IN_FFC_ETH_RXP_GPIO_Port GPIOB
+#define IN_FFC_ETH_RXN_Pin GPIO_PIN_14
+#define IN_FFC_ETH_RXN_GPIO_Port GPIOB
+#define IN_FFC_USB_DN_Pin GPIO_PIN_15
+#define IN_FFC_USB_DN_GPIO_Port GPIOB
 #define IN_PGND3_Pin GPIO_PIN_6
 #define IN_PGND3_GPIO_Port GPIOC
 #define IN_PGND2_Pin GPIO_PIN_7
@@ -98,18 +98,18 @@ void Error_Handler(void);
 #define IN_CANH_GPIO_Port GPIOC
 #define IN_GPS_PPS_Pin GPIO_PIN_12
 #define IN_GPS_PPS_GPIO_Port GPIOC
-#define OUT_FFC_USB_DP_Pin GPIO_PIN_2
-#define OUT_FFC_USB_DP_GPIO_Port GPIOD
-#define OUT_FFC_UART_TX_Pin GPIO_PIN_3
-#define OUT_FFC_UART_TX_GPIO_Port GPIOB
-#define OUT_FFC_UART_RX_Pin GPIO_PIN_4
-#define OUT_FFC_UART_RX_GPIO_Port GPIOB
-#define OUT_FFC_CANH_Pin GPIO_PIN_5
-#define OUT_FFC_CANH_GPIO_Port GPIOB
-#define OUT_FFC_CANL_Pin GPIO_PIN_8
-#define OUT_FFC_CANL_GPIO_Port GPIOB
-#define OUT_FFC_ETH_TXP_Pin GPIO_PIN_9
-#define OUT_FFC_ETH_TXP_GPIO_Port GPIOB
+#define IN_FFC_USB_DP_Pin GPIO_PIN_2
+#define IN_FFC_USB_DP_GPIO_Port GPIOD
+#define IN_FFC_UART_TX_Pin GPIO_PIN_3
+#define IN_FFC_UART_TX_GPIO_Port GPIOB
+#define IN_FFC_UART_RX_Pin GPIO_PIN_4
+#define IN_FFC_UART_RX_GPIO_Port GPIOB
+#define IN_FFC_CANH_Pin GPIO_PIN_5
+#define IN_FFC_CANH_GPIO_Port GPIOB
+#define IN_FFC_CANL_Pin GPIO_PIN_8
+#define IN_FFC_CANL_GPIO_Port GPIOB
+#define IN_FFC_ETH_TXP_Pin GPIO_PIN_9
+#define IN_FFC_ETH_TXP_GPIO_Port GPIOB
 /* USER CODE BEGIN Private defines */
 //port1
 #define EX_GPIO_Pin_1	0x0001
@@ -146,7 +146,7 @@ void Error_Handler(void);
 #define IO_EX_ETHRXP    EX_GPIO_Pin_12
 #define IO_EX_ETHTXP    EX_GPIO_Pin_13
 // define debug test2
-//#define GPIO_TEST 	0
+//#define GPIO_TEST
 /* USER CODE END Private defines */
 
 #ifdef __cplusplus
